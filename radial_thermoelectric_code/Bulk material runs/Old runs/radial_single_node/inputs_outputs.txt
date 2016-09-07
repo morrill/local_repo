@@ -1,0 +1,77 @@
+#%% 
+water = read_data('water.csv')
+air = read_data('air.csv')
+# cold side fluid properties (manual input)
+#inner_fluid = water           # enter "air" or "water" (w/o "") for the fluid you're working with
+outer_fluid = air             # enter "air" or "water" (w/o "") for the fluid you're working with
+condition = 'free'       # enter 'forced' or 'free' for forced or free convection, respectively
+# temperature
+Th = 372.0         # hot stream tempertaure [K]
+Tc = 294.0         # cold stream temperature [K]
+# average temperature for initial guessing purposes
+Tguess = (np.mean([Th,Tc]))
+# geometry
+#rwi = 3e-3        # inner pipe radius [m]
+rtei = 4e-3         # outer pipe/inner TE radius [m]
+ts = 100e-6          # spacer thickness [m]
+tw = 10e-3       # pipe thickness [m]
+# material properties
+#kh = get_props_for_hh(inner_fluid,Th) # thermal conductivity of fluid in hot side pipe [W/m.K]
+#kw = 385.0                  # pipe thermal conductivity [W/m.K]
+kn = 1.30                 # n-type material thermal conductivity [W/m.K]
+kp = 1.35                  # p-type material thermal conductivity [W/m.K]
+ks = 0.1                  # spacer/insulator thermal conductivity [W/m.K]
+Sn = -150e-6                 # n-type Seebeck coefficient [V/K] 
+Sp = 225e-6                  # p-type Seebeck coefficient [V/K] 
+sigma_n = 86957             # n-type electrical conductivity [S/m]
+sigma_p = 90000             # p-type electrical conductivity [S/m]
+sigma_c = 5.8824e+7         # electrical shunt conductivity [S/m]
+Rc = 1e-9                    # contact resistance [Ohm.m^2]
+# flow conditions
+#hh = 4.36*(kh/(2.0*rwi))   # hot side convection coefficient [W/m^2.K] = 4.36*(k/D) 
+free_str_vel = 1.0        # free stream velocity [m/s]
+# thermal resistances:
+#Rw = m.log(rtei/rwi)/(2.0*m.pi*tw*kw)   # inner pipe thermal resistance
+#%% solve problem
+#rteo = np.linspace(200e-6 + rtei, 1, num=100, dtype=float) # outer TE radius [m] sent in as array of outer radi
+elements1 = 16
+elements2 = 18
+elements3 = 18
+elements4 = 90
+elements5 = 100
+elements6 = 17
+elemnetstn = 95
+
+one = np.linspace(200e-6 + rtei, 1e-3 + rtei, elements1, dtype=float, endpoint=False)
+two = np.linspace(1e-3 + rtei, 10e-3 + rtei, elements2, dtype=float, endpoint=False)
+three = np.linspace(10e-3 + rtei, 100e-3 + rtei, elements3, dtype=float, endpoint=False)
+four = np.linspace(100e-3 + rtei, 1000e-3 + rtei, elements4, dtype=float, endpoint=False)
+five = np.linspace(1000e-3 + rtei, 2000e-3 + rtei, elements5, dtype=float, endpoint=False)
+six = np.linspace(2000e-3 + rtei, 10000e-3 + rtei, elements6, dtype=float, endpoint=True)
+rteo = np.concatenate((one,two,three,four,five,six), axis=0)
+#0.025*tw, 0.975*tw
+tn = np.linspace(0.025*tw, 0.975*tw, elemnetstn, dtype=float, endpoint=False) # length of n-type disk along cylinder
+mm = np.arange(0.05,2.55,0.05,dtype=float) # ration of electrical load resistance to TE module resistance
+#####################################################################################################################
+mm that maximized power: 1.05
+rteo that maximized power: 1.08400
+tn that maximized power: 0.00495
+
+Max power density = 169.086 [W/m^2]
+T2 = 301.808 [K]
+Average temp = 336.904 [K]
+tn at maxp = 4.950 [mm]
+rteo at maxp = 1084.000 [mm]
+mm at maxp = 1.050
+
+Rte = 67.919 [W/K]
+hc = 2.652 [W/m^2K]
+Rhc = 5.536 [W/K]
+Relec_te = 4.073 [mOhms]
+Relec_contact = 0.671 [microOhms]
+Relec = 4.073 [mOhms]
+
+Qh = Qte - 1/2I^2Re + SIT1 = 1.453 [W]
+Qc = 1.410 [W]
+P = 0.043 [W]
+Pd = 169.109 [W/m^2]

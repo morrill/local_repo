@@ -1,0 +1,99 @@
+#%% 
+#water = read_data('water.csv')
+air = read_data('air.csv')
+# cold side fluid properties (manual input)
+#inner_fluid = water           # enter "air" or "water" (w/o "") for the fluid you're working with
+outer_fluid = air             # enter "air" or "water" (w/o "") for the fluid you're working with
+condition = 'free'           # enter 'forced' or 'free' for forced or free convection, respectively
+orientation = 'top'           # orientation of hot surface
+
+# temperature
+Th = 372.0         # hot stream tempertaure [K]
+Tc = 294.0         # cold stream temperature [K]
+
+# geometry
+# area of legs will be varied by array
+ti = 100e-6                       # insulator thickness [m]
+tw = 10e-3                       # axial length of radial device [m]
+Lw = 2e-3                       # thickness of pipe for radial device and base plate for planar [m]
+D = 8e-3                         # outer diemeter of pipe we're copmaring to [m]
+FF = np.linspace(0.01,1,num=100) # fill factor array
+Ah = tw*m.pi*D                 # hot side area [m^2]
+Al = np.zeros(len(FF))
+Al = (FF*(Ah/2))              # area of TE legs [m^2]
+L = Ah/(2*tw + 2*m.pi*D)       #flat-plate convection characteristic length
+
+# material properties
+#kh = get_props_for_hh(inner_fluid,Th) # thermal conductivity of fluid in hot side pipe [W/m.K]
+kw = 385.0                  # pipe thermal conductivity [W/m.K]
+kn = 1.30                  # n-type material thermal conductivity [W/m.K]
+kp = 1.35                  # p-type material thermal conductivity [W/m.K]
+ks = 0.0                  # spacer thermal conductivity [W/m.K]
+kins = 0.1                    # insulator thermal conductivity [W/m.K]
+Sn = -150e-6                 # n-type Seebeck coefficient [V/K] 
+Sp = 225e-6                  # p-type Seebeck coefficient [V/K] 
+sigma_n = 86975             # n-type electrical conductivity [S/m]
+sigma_p = 90000             # p-type electrical conductivity [S/m]
+Rc = 1e-9                    # contact resistance [Ohm.m^2]
+
+# flow conditions
+#hh = 4.36*(kh/(2.0*rwi))   # hot side convection coefficient [W/m^2.K] = 4.36*(k/D) 
+free_str_vel = 1.0        # free stream velocity [m/s]
+# thermal resistances for first two nodes:
+Rw = Lw/(Ah*kw)   # inner pipe thermal resistance
+Ri = ti/(Ah*kins)
+Rwplusi = Rw + Ri
+
+#%% solve problem
+#==============================================================================
+# elements = 10
+# one = np.linspace(1e-4, 1e-3, elements, dtype=float)
+# two = np.linspace(1e-3, 1e-2, elements, dtype=float)
+# three = np.linspace(1e-2, 1e-1, elements, dtype=float)
+# four = np.linspace(1e-1, 1, elements, dtype=float)
+# five = np.linspace(1, 10, elements, dtype=float, endpoint=True)
+# leglength = np.concatenate((one,two,three,four,five), axis=0)
+#==============================================================================
+elements1 = 32
+elements2 = 36
+elements3 = 18
+elements4 = 90
+elements5 = 100
+elements6 = 17
+
+one = np.linspace(200e-6, 1e-3, elements1, dtype=float, endpoint=False)
+two = np.linspace(1e-3, 10e-3, elements2, dtype=float, endpoint=False)
+three = np.linspace(10e-3, 100e-3, elements3, dtype=float, endpoint=False)
+four = np.linspace(100e-3, 1000e-3, elements4, dtype=float, endpoint=False)
+five = np.linspace(1000e-3, 2000e-3, elements5, dtype=float, endpoint=False)
+six = np.linspace(2000e-3, 10000e-3, elements6, dtype=float, endpoint=True)
+leglength = np.concatenate((one,two,three,four,five,six), axis=0)
+
+mm = np.arange(0.05,2.55,0.05,dtype=float) # ration of electrical load resistance to TE module resistance
+##################################################################################################
+mm that maximized power: 1.35
+Leglength that maximized power: 0.09500
+Al that maximized power: 0.00012
+FF at max power: 0.98
+
+Max power density: 10.35637 [W/m^2]
+mm that maximized power: 1.35
+Leglength that maximized power: 0.09500 [m]
+t that maximized power: 0.00012 [m]
+FF at max power: 0.98
+
+Rte = 73.688 [W/K]
+Rw = 3.942 [W/K]
+Rhh = 10.757 [W/K]
+hc = 2.161 [W/m^2K]
+Rhc = 4.128 [W/K]
+Relec_te = 4.417 [mOhms]
+Relec_contact = 0.445 [microOhms]
+Relec = 4.418 [mOhms]
+
+Qh = 1.077943 [W]
+Qw = 1.077943 [W]
+Qte - 1/2I^2Re + SIT1 = 1.077943 [W]
+Qc = 1.051472 [W]
+P = 0.026471 [W]
+Pd = 102.755116 [W/m^2]
