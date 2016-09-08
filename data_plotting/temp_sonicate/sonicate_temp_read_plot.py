@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+This is for plotting temperature data from sonication treatments
 
 This is a temporary script file.
 """
