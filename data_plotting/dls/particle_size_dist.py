@@ -9,25 +9,36 @@ import numpy as np
 import pandas as pd
 from scipy import stats, integrate
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set(color_codes=True)
-#%%
-st1 = np.loadtxt('standard1.asc', delimiter="\t", skiprows=89)
-st2 = np.loadtxt('standard2.asc', delimiter="\t", skiprows=89)
 
-#%% Trying to plot it with a bar plot
+#%% read in polystyrene standards from 9/6/16
+st3 = np.loadtxt('standard3_9_6_16.asc', delimiter="\t", skiprows=89)
+st4 = np.loadtxt('standard4_9_6_16.asc', delimiter="\t", skiprows=89)
+st5 = np.loadtxt('standard5_9_6_16_new_water.asc', delimiter="\t", skiprows=89)
+st6 = np.loadtxt('standard6_9_6_16_new_water.asc', delimiter="\t", skiprows=89)
 
-plt.figure(figsize=(45,10))
-f, (ax1, ax2) = plt.subplots(2)
-sns.barplot(st1[:,0],st1[:,1], ax=ax1, palette="PuBuGn_d")
-plt.xticks(rotation=90)
+#%% read in carbon ink from 9/1/16
+c41 = np.loadtxt('C4.1_30ul_9_1_16.asc', delimiter="\t", skiprows=89)
+c42 = np.loadtxt('C4.1_30ul_9_1_16.asc', delimiter="\t", skiprows=89)
+c43 = np.loadtxt('C4.1_30ul_9_1_16.asc', delimiter="\t", skiprows=89)
+
+#%% read in carbon ink from 9/6/16
+c44 = np.loadtxt('C4.1_sonicated_9_6_16.asc', delimiter="\t", skiprows=89)
+
+#%% Plot standards with a bar plot
+plt.figure(figsize=(15,5))
+plt.bar(st3[:,0],st3[:,1], width=15, color=(0,0.6,0.2,0.2))
+plt.bar(st4[:,0],st4[:,1], width=15, color=(0,1,1,0.2))
+plt.bar(st5[:,0],st5[:,1], width=15, color=(0,0.1,0.5,0.2))
+plt.bar(st6[:,0],st6[:,1], width=15, color=(0.8,0.5,1,0.2))
 plt.xlabel('Particle Size [nm]')
 plt.ylabel('Relative Intensity')
-sns.barplot(st2[:,0],st2[:,1], ax=ax2, palette="YlGnBu")
-plt.xticks(rotation=90)
-plt.xlabel('Particle Size [nm]')
-plt.ylabel('Relative Intensity')
-plt.show()
+plt.xlim([0,800])
+plt.title('Polystyrene standard Size = 495 nm')
+plt.grid()
+
+#%% plot carbon data from 9/1/16
+
+
 #%% Try and change the data so that you can make a histogram. Make 10,000 the highest number of particles counted per one size. 
 # then take intensity*10,000 and add that many of the size number to an array.
 
