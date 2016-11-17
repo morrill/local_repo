@@ -8,20 +8,172 @@ This is for plotting results from rheometer viscosity measurements
 """
 import numpy as np
 import matplotlib.pyplot as plt
-#%%
-rt5 = np.loadtxt('RT5_standard.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
-eg11 = np.loadtxt('PureEG_1_1.txt', skiprows=3, usecols=(0,1,2)) # pure ethylene glycol 1.1
-eg12 = np.loadtxt('PureEG_1_2.txt', skiprows=3, usecols=(0,1,2)) # pure ethylene glycol 1.2
-eg21 = np.loadtxt('PureEG_2_1.txt', skiprows=3, usecols=(0,1,2)) # pure ethylene glycol 2.1
-eg22 = np.loadtxt('PureEG_2_2.txt', skiprows=3, usecols=(0,1,2)) # pure ethylene glycol 2.2
-c_son_11 = np.loadtxt('C_ink_sonicated1_1.txt', skiprows=3, usecols=(0,1,2)) # sonicated C ink 1.1
-c_son_12 = np.loadtxt('C_ink_sonicated1_2.txt', skiprows=3, usecols=(0,1,2)) # sonicated C ink 1.2
-c_son_21 = np.loadtxt('C_ink_sonicated2_1.txt', skiprows=3, usecols=(0,1,2)) # sonicated C ink 2.1
-c_son_22 = np.loadtxt('C_ink_sonicated2_2.txt', skiprows=3, usecols=(0,1,2)) # sonicated C ink 2.2
-c11 = np.loadtxt('C_ink1_1.txt', skiprows=3, usecols=(0,1,2)) # C ink 1.1
-c12 = np.loadtxt('C_ink1_2.txt', skiprows=3, usecols=(0,1,2)) # C ink 1.2
-c21 = np.loadtxt('C_ink2_1.txt', skiprows=3, usecols=(0,1,2)) # C ink 2.1
-c22 = np.loadtxt('C_ink2_2.txt', skiprows=3, usecols=(0,1,2)) # C ink 2.2
+from matplotlib.ticker import ScalarFormatter
+from matplotlib import rcParams
+rcParams['font.size'] = 14
+#%% Read Data from 11-15-16
+#rt5 = np.loadtxt('RT5_standard.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
+eg11 = np.loadtxt('eg11.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 1.1
+eg12 = np.loadtxt('eg12.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 1.2
+eg13 = np.loadtxt('eg13.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 1.3
+eg14 = np.loadtxt('eg14.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 1.4
+eg15 = np.loadtxt('eg15.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 1.5
+eg21 = np.loadtxt('eg21.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.1
+eg22 = np.loadtxt('eg22.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.2
+eg23 = np.loadtxt('eg23.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.3
+eg24 = np.loadtxt('eg24.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.4
+eg25 = np.loadtxt('eg25.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.5
+eg26 = np.loadtxt('eg26.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.6
+eg27 = np.loadtxt('eg27.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.7
+eg28 = np.loadtxt('eg28.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.8
+eg29 = np.loadtxt('eg29.txt', skiprows=2, usecols=(0,1,2)) # pure ethylene glycol 2.9
+#%% plot Data from 11-15-16
+yellow=np.linspace(0,0.9,9)
+fig = plt.figure(figsize=(11,6))
+ax = fig.add_subplot(111)
+#ax.semilogx(eg11[:,1],eg11[:,2]*1000, color=(1,yellow[0],0), label='2.1')
+#ax.semilogx(eg12[:,1],eg12[:,2]*1000, color=(1,yellow[1],0), label='2.2')
+#ax.semilogx(eg13[:,1],eg13[:,2]*1000, color=(1,yellow[2],0), label='2.3')
+#ax.semilogx(eg14[:,1],eg14[:,2]*1000, color=(1,yellow[3],0), label='2.4')
+#ax.semilogx(eg15[:,1],eg15[:,2]*1000, color=(1,yellow[4],0), label='2.5')
+
+ax.semilogx(eg21[:,1],eg21[:,2]*1000, color=(1,yellow[0],0), label='2.1')
+ax.semilogx(eg22[:,1],eg22[:,2]*1000, color=(1,yellow[1],0), label='2.2')
+ax.semilogx(eg23[:,1],eg23[:,2]*1000, color=(1,yellow[2],0), label='2.3')
+ax.semilogx(eg24[:,1],eg24[:,2]*1000, color=(1,yellow[3],0), label='2.4')
+ax.semilogx(eg25[:,1],eg25[:,2]*1000, color=(1,yellow[4],0), label='2.5')
+ax.semilogx(eg26[:,1],eg26[:,2]*1000, color=(1,yellow[5],0), label='2.6')
+ax.semilogx(eg27[:,1],eg27[:,2]*1000, color=(1,yellow[6],0), label='2.7')
+ax.semilogx(eg28[:,1],eg28[:,2]*1000, color=(1,yellow[7],0), label='2.8')
+ax.semilogx(eg29[:,1],eg29[:,2]*1000, color=(1,yellow[8],0), label='2.9')
+
+plt.axhline(16.1, label='Spec') # horizontal line for the expected measurement
+plt.xlabel('Shear rate [$s^{-1}$]')
+plt.ylabel('Viscosity [$mPa*s$]')
+plt.legend(loc='upper right',ncol=2, fontsize=14)
+plt.xlim([1,12000])
+ax.xaxis.set_major_formatter(ScalarFormatter())
+plt.ylim(10,20)
+plt.title('Ethylene Glycol at 23.0 °C (boiled w/ water near system)')
+plt.tick_params(labelright=True)
+#%% Read Data from 11-14-16
+rt11 = np.loadtxt('RT511.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
+rt12 = np.loadtxt('RT512.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
+rt21 = np.loadtxt('RT521.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
+rt22 = np.loadtxt('RT522.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
+rt23 = np.loadtxt('RT523.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
+rt24 = np.loadtxt('RT524.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
+rt25 = np.loadtxt('RT525.txt', skiprows=3, usecols=(0,1,2)) # RT5 Standard
+#%% Plot data from 11-14-16
+yellow=np.linspace(0,0.9,5)
+fig = plt.figure(figsize=(11,6))
+ax = fig.add_subplot(111)
+
+#ax.semilogx(rt11[:,1],rt11[:,2]*1000, color=(1,yellow[0],0), label='1.1')
+#ax.semilogx(rt12[:,1],rt12[:,2]*1000, color=(1,yellow[3],0), label='1.2')
+
+ax.semilogx(rt21[:,1],rt21[:,2]*1000, color=(1,yellow[0],0), label='2.1')
+ax.semilogx(rt22[:,1],rt22[:,2]*1000, color=(1,yellow[1],0), label='2.2')
+ax.semilogx(rt23[:,1],rt23[:,2]*1000, color=(1,yellow[2],0), label='2.3')
+ax.semilogx(rt24[:,1],rt24[:,2]*1000, color=(1,yellow[3],0), label='2.2')
+ax.semilogx(rt25[:,1],rt25[:,2]*1000, color=(1,yellow[4],0), label='2.3')
+
+plt.axhline(4.682, label='Spec') # horizontal line for the expected measurement
+plt.xlabel('Shear rate [$s^{-1}$]')
+plt.ylabel('Viscosity [$mPa*s$]')
+plt.legend(loc='upper right',ncol=1, fontsize=14)
+plt.xlim([1,7000])
+ax.xaxis.set_major_formatter(ScalarFormatter())
+plt.ylim(1,10)
+plt.title('RT5 Standard at 23.0 °C')
+plt.tick_params(labelright=True)
+#%% plot sonicated carbon ink sample 
+yellow=np.linspace(0,0.9,9)
+
+fig = plt.figure(figsize=(11,6))
+ax = fig.add_subplot(111)
+#ax.semilogx(eg11[:,1],eg11[:,2]*1000, color=(1,yellow[0],0), label='2.1')
+#ax.semilogx(eg12[:,1],eg12[:,2]*1000, color=(1,yellow[1],0), label='2.2')
+#ax.semilogx(eg13[:,1],eg13[:,2]*1000, color=(1,yellow[2],0), label='2.3')
+#ax.semilogx(eg14[:,1],eg14[:,2]*1000, color=(1,yellow[3],0), label='2.4')
+#ax.semilogx(eg15[:,1],eg15[:,2]*1000, color=(1,yellow[4],0), label='2.5')
+
+
+
+
+ax.semilogx(eg21[:,1],eg21[:,2]*1000, color=(1,yellow[0],0), label='2.1')
+ax.semilogx(eg22[:,1],eg22[:,2]*1000, color=(1,yellow[1],0), label='2.2')
+ax.semilogx(eg23[:,1],eg23[:,2]*1000, color=(1,yellow[2],0), label='2.3')
+ax.semilogx(eg24[:,1],eg24[:,2]*1000, color=(1,yellow[3],0), label='2.4')
+ax.semilogx(eg25[:,1],eg25[:,2]*1000, color=(1,yellow[4],0), label='2.5')
+ax.semilogx(eg26[:,1],eg26[:,2]*1000, color=(1,yellow[5],0), label='2.6')
+ax.semilogx(eg27[:,1],eg27[:,2]*1000, color=(1,yellow[6],0), label='2.7')
+ax.semilogx(eg28[:,1],eg28[:,2]*1000, color=(1,yellow[7],0), label='2.8')
+ax.semilogx(eg29[:,1],eg29[:,2]*1000, color=(1,yellow[8],0), label='2.9')
+
+
+
+plt.axhline(16.1, label='Spec')
+
+#plt.plot(st11[:,1],st11[:,2]*1000, color=(1,0,0), label='1.1') 
+#plt.plot(st12[:,1],st12[:,2]*1000, color=(1,0.2,0), label='1.2') 
+#plt.plot(eg13[:,1],eg13[:,2]*1000, color=(1,0.4,0), label='1.3')
+#plt.plot(eg14[:,1],eg14[:,2]*1000, color=(1,0.6,0), label='1.4')
+#plt.plot(eg15[:,1],eg15[:,2]*1000, color=(1,0.8,0), label='1.5')
+plt.xlabel('Shear rate [$s^{-1}$]')
+plt.ylabel('Viscosity [$mPa*s$]')
+plt.legend(loc='upper right',ncol=2, fontsize=14)
+plt.xlim([1,12000])
+ax.xaxis.set_major_formatter(ScalarFormatter())
+plt.ylim(10,20)
+plt.title('Ethylene Glycol at 23.0 °C (boiled w/ water near system)')
+plt.tick_params(labelright=True)
+#plt.xscale('log')
+
+#plt.figure(figsize=(10,5))
+#plt.plot(eg21[:,1],eg21[:,2]*1000, color=(1,0,0), label='2.1') 
+#plt.plot(eg22[:,1],eg22[:,2]*1000, color=(1,0.2,0), label='2.2') 
+#plt.plot(eg23[:,1],eg23[:,2]*1000, color=(1,0.4,0), label='2.3')
+#plt.plot(eg24[:,1],eg24[:,2]*1000, color=(1,0.6,0), label='2.4')
+#plt.plot(eg25[:,1],eg25[:,2]*1000, color=(1,0.8,0), label='2.5')
+##plt.plot(eg31[:,1],eg31[:,2]*1000, color=(0,0,1), label='~2.6')
+#plt.xlabel('Shear rate [1/s]')
+#plt.ylabel('Viscosity [mPa.s]')
+#plt.legend()
+#plt.xlim([1,10000])
+#plt.ylim(7,20)
+#plt.title('Pure ethylene glycol (at 23.0 °C)')
+##plt.xscale('log')
+
+#plt.figure(figsize=(10,5))
+#plt.plot(eg11[:,1],eg11[:,2]*1000, color=(1,0,0), label='1.1') 
+#plt.plot(eg12[:,1],eg12[:,2]*1000, color=(1,0,0.8), label='1.2') 
+#plt.plot(eg13[:,1],eg13[:,2]*1000, color=(0,1,0), label='1.3')
+#plt.plot(eg14[:,1],eg14[:,2]*1000, color=(0,0,1), label='1.4')
+#plt.plot(eg15[:,1],eg15[:,2]*1000, color=(0.5,0.5,0.5), label='1.5')
+#plt.plot(eg21[:,1],eg21[:,2]*1000, color=(1,0,0), label='2.1') 
+#plt.plot(eg22[:,1],eg22[:,2]*1000, color=(1,0,0.8), label='2.2') 
+#plt.plot(eg23[:,1],eg23[:,2]*1000, color=(0,1,0), label='2.3')
+#plt.plot(eg24[:,1],eg24[:,2]*1000, color=(0,0,1), label='2.4')
+#plt.plot(eg25[:,1],eg25[:,2]*1000, color=(0.5,0.5,0.5), label='2.5')
+#plt.xlabel('Shear rate [1/s]')
+#plt.ylabel('Viscosity [mPa.s]')
+#plt.legend(loc='upper right', ncol=2, fontsize=14)
+#plt.xlim([1,10000])
+#plt.ylim(9,17)
+#plt.title('Pure ethylene glycol (at 23.0 °C)')
+##plt.xscale('log')
+
+#plt.figure(figsize=(10,5))
+#plt.plot(eg15[:,1],eg15[:,2]*1000, color=(1,0,0), label='1.5')
+#plt.plot(eg25[:,1],eg25[:,2]*1000, color=(0,1,0), label='2.5')
+#plt.plot(eg31[:,1],eg31[:,2]*1000, color=(0,0,1), label='2.5')
+#plt.xlabel('Shear rate [1/s]')
+#plt.ylabel('Viscosity [mPa.s]')
+#plt.legend()
+#plt.xlim([1,10000])
+#plt.ylim(7,13)
+#plt.title('Pure ethylene glycol (at 23.0 °C)')
 #%% plot RT5 sample and calculate % error for average of semi-flat region 
 rt5_ave = np.mean(rt5[np.min(np.where(rt5[:,1]>=2e3)):,2]*1e3)
 rt5_data = np.array([[20,4.941],[23,4.682],[24,4.600],[25,4.520]]) # data from RT5 bottle
