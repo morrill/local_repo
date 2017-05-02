@@ -7,9 +7,11 @@ Created on Wed Aug 03 15:21:27 2016
 #%%
 import numpy as np
 import matplotlib.pyplot as plt
-
-<<<<<<< HEAD
-#%% read in polystyrene standards
+#%% read in data from geogetown:
+size = np.loadtxt('averages.txt')
+plt.figure(figsize=(10,10))
+plt.hist(size, bins=10)
+#%%
 st_auto_off_200 = np.loadtxt('standard1_auto_channel_width_off.asc', delimiter="\t", skiprows=89)
 st_auto_on1_200 = np.loadtxt('standard1_auto_channel_width_on.asc', delimiter="\t", skiprows=89)
 st_auto_on2_200 = np.loadtxt('standard1_auto_channel_width_on2.asc', delimiter="\t", skiprows=89)
@@ -22,7 +24,6 @@ st1_CW_400um = np.loadtxt('standard1_CW_400µm.asc', delimiter="\t", skiprows=89
 c41 = np.loadtxt('C4.1_30ul_9_1_16.asc', delimiter="\t", skiprows=89)
 c42 = np.loadtxt('C4.1_30ul_9_1_16.asc', delimiter="\t", skiprows=89)
 c43 = np.loadtxt('C4.1_30ul_9_1_16.asc', delimiter="\t", skiprows=89)
-=======
 #%% read in all polystyrene standard measuerments
 st0 = np.loadtxt('standard0.asc', delimiter="\t", skiprows=89)
 st1 = np.loadtxt('standard1.asc', delimiter="\t", skiprows=89)
@@ -40,7 +41,6 @@ c43 = np.loadtxt('C4.3_30ul_9_1_16.asc', delimiter="\t", skiprows=89)
 #%% read in carbon ink from 9/6/16
 c44 = np.loadtxt('C4.1_sonicated_9_6_16.asc', delimiter="\t", skiprows=89)
 
->>>>>>> 4fe93bbe4c4687abc7e0c741806b454fb2222e80
 #%% Plot standards with a bar plot
 plt.figure(figsize=(15,5))
 plt.bar(st0[:,0],st0[:,1], width=15, color=(0.6,0.4,0.7,0.2))
