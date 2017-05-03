@@ -11,6 +11,11 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
 from matplotlib import rcParams
 rcParams['font.size'] = 14
+# these following things change the math latex font to the defalt matplotlib font
+rcParams['mathtext.fontset'] = 'custom'
+rcParams['mathtext.rm'] = 'Bitstream Vera Sans'
+rcParams['mathtext.it'] = 'Bitstream Vera Sans:italic'
+rcParams['mathtext.bf'] = 'Bitstream Vera Sans:bold'
 
 #%% Read in data from 2-27-17
 head_skip = np.arange(21,344,41)
@@ -21,14 +26,15 @@ for i, num in enumerate(head_skip):
 yellow=np.linspace(0,0.9,8)
 fig = plt.figure(figsize=(11,6))
 ax = fig.add_subplot(111)
-for i, num in enumerate(range(0,8)):
-    exec("ax.semilogx(cs%s[:,1],cs%s[:,2]*1000, color=(1,yellow[%d],0))" % (num,num,i))
-plt.xlabel('Shear rate [$s^{-1}$]')
-plt.ylabel('Viscosity [$mPa*s$]')
+#for i, num in enumerate(range(0,1)):
+ #   exec("ax.semilogx(cs%s[:,1],cs%s[:,2]*1000, color=(1,yellow[%d],0))" % (num,num,i))
+ax.semilogx(cs0[:,1],cs0[:,2]*1000, color=(0,0.5,1), linewidth=3)
+plt.xlabel('Shear rate ($\mathrm{s^{-1}}$)')
+plt.ylabel('Viscosity ($\mathrm{mPa*s}$)')
 plt.xlim([10,2500])
 plt.ylim(6,18)
 ax.xaxis.set_major_formatter(ScalarFormatter())
-plt.title('c4.1, 8 measurements, solvent trap, sonication')
+#plt.title('c4.1, 8 measurements, solvent trap, sonication')
 plt.tick_params(labelright=True)
 #%% Plot averages from 2-27-17
 ave = np.zeros(8)
@@ -75,25 +81,25 @@ plt.ylim(6,18)
 plt.xlim([1,10])
 plt.title('Average viscosity of each measurement, C4.1 w/ solvent trap, no sonication')
 
-
-
 #%% plot all from 2-24-17 and 2-27-17 and 2-17-17
 a1 = np.linspace(0,0.9,9)[::-1]
 fig = plt.figure(figsize=(11,6))
 ax = fig.add_subplot(111)
-for i, num in enumerate(range(0,1)):
-    exec("ax.semilogx(c%s[:,1],c%s[:,2]*1000, color='k', alpha=a1[i], label='C4.1 Not sonicated' if i == 0 else '')" % (num,num))
-for i, num in enumerate(range(0,1)):  
-    exec("ax.semilogx(cs%s[:,1],cs%s[:,2]*1000, color='b', alpha=a1[i], label='C4.1 Sonicated'if i == 0 else '')" % (num,num))
-for i, num in enumerate(range(0,1)):  
-    exec("ax.semilogx(eg%s[:,1],eg%s[:,2]*1000, color='g', alpha=a1[i], label='Neat ethylene glycol'if i == 0 else '')" % (num,num))
+#for i, num in enumerate(range(0,1)):
+ #   exec("ax.semilogx(c%s[:,1],c%s[:,2]*1000, color='k', alpha=a1[i], label='C4.1 Not sonicated' if i == 0 else '')" % (num,num))
+ax.semilogx(c0[:,1],c0[:,2]*1000, color='k', label='C4.1 Not sonicated',linewidth=3)
+#for i, num in enumerate(range(0,1)):  
+ #   exec("ax.semilogx(cs%s[:,1],cs%s[:,2]*1000, color='(0,0.5,1)', alpha=a1[i], label='C4.1 Sonicated'if i == 0 else '')" % (num,num))
+ax.semilogx(cs0[:,1],cs0[:,2]*1000, color=(0,0.5,1), label='C4.1 Sonicated',linewidth=3)
+#for i, num in enumerate(range(0,1)):  
+ #   exec("ax.semilogx(eg%s[:,1],eg%s[:,2]*1000, color='g', alpha=a1[i], label='Neat ethylene glycol'if i == 0 else '')" % (num,num))
 plt.xlabel(r'Shear rate ($\mathrm{s}^{-1}$)')
 plt.ylabel(r'Viscosity ($\mathrm{mPa*s}$)')
 plt.xlim([10,2500])
 plt.ylim(6,18)
 ax.xaxis.set_major_formatter(ScalarFormatter())
 #plt.title('C4.1, 9 measurements, solvent trap, no sonication')
-plt.tick_params(labelright=True)
+plt.tick_params(labelright=False)
 plt.legend(loc=4)
 
 #%% Plot averages from 2-24-17 and 2-27-17 and 2-17-17

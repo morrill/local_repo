@@ -112,17 +112,33 @@ print('Standard deviation for ' + filenames[0][8:12] + ' = %.3f [um^2]' %std_are
 #%% Run to get all raw electrical measurement data, MUST BE IN RIGHT WORKING DIRECTORY
 # generate list of sample ID numbers for file name
 # current working directory must be where the data is
+  
+# for samples with multiple different layers
+#samplePath = []
+#samplenum = []
+#sampleabrv = []
+#for samp in np.arange(4,5):       # INPUT sample numbers, does not include upper bound
+#    for lay in np.arange(4,5):      # layer numbers, does not include upper bound   
+#        for meas in np.arange(1,6): # measurement number, does not include upper bound
+#            path = os.path.join(os.getcwd(),str(samp)+"_"+str(lay)+"_"+str(meas)+".csv")            
+#            samplePath.append(path)
+#            #samplePath.append('G:\\Users\\Michael Orrill\\Documents\\python_notebooks\\2nd_run\\' + str(samp)+"_"+str(lay)+"_"+str(meas)+".csv")
+#            samplenum.append(str(samp)+"_"+str(lay)+"_"+str(meas))
+#        sampleabrv.append(str(samp)+"_"+str(lay))    
+        
+# for samples with no variation in layers
 samplePath = []
 samplenum = []
 sampleabrv = []
-for samp in np.arange(4,5):       # INPUT sample numbers, does not include upper bound
-    for lay in np.arange(4,5):      # layer numbers, does not include upper bound   
-        for meas in np.arange(1,6): # measurement number, does not include upper bound
-            path = os.path.join(os.getcwd(),str(samp)+"_"+str(lay)+"_"+str(meas)+".csv")            
-            samplePath.append(path)
-            #samplePath.append('G:\\Users\\Michael Orrill\\Documents\\python_notebooks\\2nd_run\\' + str(samp)+"_"+str(lay)+"_"+str(meas)+".csv")
-            samplenum.append(str(samp)+"_"+str(lay)+"_"+str(meas))
-        sampleabrv.append(str(samp)+"_"+str(lay))       
+heat = 'ht'
+noheat = 'nht'
+for samp in np.arange(1,11):    # INPUT sample numbers, does not include upper bound
+    for meas in np.arange(1,4): # measurement number, does not include upper bound
+        path = os.path.join(os.getcwd(),heat+str(samp)+"_"+str(meas)+".csv")            
+        samplePath.append(path)
+        #samplePath.append('G:\\Users\\Michael Orrill\\Documents\\python_notebooks\\2nd_run\\' + str(samp)+"_"+str(lay)+"_"+str(meas)+".csv")
+        samplenum.append(str(samp)+"_"+str(meas))
+    sampleabrv.append(str(samp))    
         
 # put all data into dictionary called 'data' each measurement is accessable via its sampleID (1_2_3)
 datahead = ['V', 'I', 'dV', 'R']
